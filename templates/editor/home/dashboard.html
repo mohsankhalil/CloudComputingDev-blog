@@ -1,0 +1,105 @@
+{% extends 'layout/editormain.html' %}
+
+{% block body %}
+
+<div class="container mt-5 py-4">
+
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-4 mt-5">
+            <div class="card text-left ">
+                <div class="card-body">
+                    <h4 class="card-title">Name : {{full_name}}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 mt-5">
+            <div class="card text-left ">
+                <div class="card-body">
+                    <h4 class="card-title">Groups :
+                        {% for grp in group %}
+                        {{grp.name|default:'-'}}
+                        {% endfor %}
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 mt-5">
+            <div class="card text-left ">
+                <div class="card-body">
+                    <h4 class="card-title">Total Post : {{blogs.count}}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-11 my-4">
+            <div class="card my-5">
+                <div class="card-header" style="display: inline;">
+                    <h4 class="card-title" style="display: initial;">All Blogs</h4>
+                    <a href="{% url 'addblog' %}" style="float:right;" class="btn btn-success btn-sm"><i
+                            class="fa fa-plus"></i> Add
+                        Blog</a>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Sub Title</th>
+                                <th scope="col">Created At</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if blogs %}
+
+
+                            {% for blog in blogs %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{blog.title}}</td>
+                                <td>{{blog.subtitle|default:'-'}}</td>
+                                <td>{{blog.created_at|date:'F d, Y'}}</td>
+                                <td>
+                                    {% if blog.status %}
+                                    <span class="text-success">Active </span>
+                                    {% else %}
+                                    <span class="text-danger">Inactive </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div style="display:inline-flex;">
+                                        {% if perms.blog.change_blog %}
+                                        <a href="{% url 'edit-blog' blog.pk %}" class="btn btn-warning btn-sm"
+                                            title="Edit Blog"> <i class="fa fa-edit"></i></a>
+                                        {% endif %}
+
+                                        {% if perms.blog.delete_blog %}
+                                        <a href="{% url 'delete-blog' blog.pk %}" class="btn btn-danger btn-sm"
+                                            title="Delete Blog"> <i class="fa fa-trash"></i></a>
+                                        {% endif %}
+
+
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="6">No Blog Avalibale</td>
+                            </tr>
+                            {% endif %}
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+{% endblock body %}

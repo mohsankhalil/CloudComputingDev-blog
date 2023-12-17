@@ -1,0 +1,39 @@
+{% extends 'layout/main.html' %}
+
+{% block title %}
+Home Page
+{% endblock title %}
+
+{% block body %}
+{% include 'include/headtitle.html' with headtitle="Mini-Blog" headsubTitle=""  %}
+<div class="container py-4 px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10">
+
+            {% for blog in blogs %}
+            <div class="post-preview">
+                <a href="{% url 'post' blog.slug %}">
+                    <h2 class="post-title">{{blog.title}}</h2>
+                    <h3 class="post-subtitle">
+                        {% if blog.subtitle %}
+                        {{blog.subtitle}}
+                        {% endif %}
+                    </h3>
+                </a>
+                <p class="post-meta">
+                    Posted by
+                    <a href="/">{{blog.created_by.first_name}}</a>
+                    on {{blog.created_at|date:"F d, Y"}}
+                </p>
+            </div>
+            <hr class="my-4" />
+            {% endfor %}
+
+
+
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="/">Older Posts
+                    →</a></div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

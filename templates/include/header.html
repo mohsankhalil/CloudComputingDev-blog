@@ -1,0 +1,53 @@
+{% load static %}
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg {% if editor == '1' %} bg-dark {% else %} navbar-light {% endif %}" id="mainNav">
+    <div class="container px-2 px-lg-5">
+        <a class="navbar-brand" href="{% url 'home' %}">Mini Blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            {% if editor == "1" %}
+            <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'dashboard' %}">Dashboard</a>
+                </li>
+                </li>
+                <li class="nav-item  mx-2 my-3"><a class="nav-link btn btn-danger"
+                        href="{% url 'logout_editor' %}">Logout</a>
+                </li>
+
+            </ul>
+            {% else %}
+
+            <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'contact' %}">Contact</a>
+                </li>
+
+                {% if request.user.is_authenticated and not request.user.is_staff %}
+                <li class="nav-item  mx-2 my-3"><a class="nav-link btn btn-default bg-light text-black"
+                        href="{% url 'applyform' %}">Apply As
+                        Editor</a></li>
+                <li class="nav-item  mx-2 my-3"><a class="nav-link btn btn-danger" href="{% url 'logout' %}">Logout</a>
+                </li>
+
+                {% else %}
+                <li class="nav-item  mx-2 my-3"><a class="nav-link btn btn-default bg-light text-black"
+                        href="{% url 'login' %}">Apply As
+                        Editor</a></li>
+                <li class="nav-item  mx-2 my-3"><a class="nav-link btn btn-danger" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item  mx-2 my-3"><a class="nav-link btn btn-danger"
+                        href="{% url 'sign-up' %}">Sign-Up</a>
+                </li>
+                {% endif %}
+
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+<!-- Page Header-->

@@ -1,0 +1,14 @@
+{% extends 'layout/main.html' %}
+
+{% block title %}
+{{post.title}}
+{% endblock title %}
+
+{% block body %}
+{% include 'include/headtitle.html' with headtitle=post.title|truncatewords:4 headsubTitle=post.subtitle  %}
+{% load static %}
+<!-- Post Content-->
+<article class="mb-4">
+    {{post.post|safe}}
+</article>
+{% endblock %}

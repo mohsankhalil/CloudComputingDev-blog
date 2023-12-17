@@ -1,0 +1,42 @@
+{% extends 'layout/main.html' %}
+
+{% block title %}
+Apply For Editor
+{% endblock title %}
+
+{% block body %}
+{% include 'include/headtitle.html' with headtitle="Editor Form" headsubTitle="Become an editor"  %}
+
+<div class="container mb-5 py-4 px-4 px-lg-5">
+    <div class="row">
+        <div class="col-lg-3 "></div>
+        <div class="col-lg-6 ">
+            <div class="card text-left">
+                <div class="card-body">
+                    <h2 class="text-center card-title">Editor Form</h2>
+                    <hr>
+                    {% for error in form.non_field_errors %}
+                    {{error.tag}} {{error}}
+                    {% endfor %}
+                    <div class="container">
+                        <form method="POST" novalidate enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% for fm in form %}
+                            <div class="form-group row">
+                                {{fm.label_tag}}
+                                <div class="col-md-12">
+                                    {{fm}}
+                                    <label class="text-danger"><small>{{fm.errors|striptags}}</small></label>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <button class="btn btn-success my-3" name="signup">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 "></div>
+    </div>
+</div>
+{% endblock %}

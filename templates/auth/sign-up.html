@@ -1,0 +1,42 @@
+{% extends 'layout/main.html' %}
+
+{% block title %}
+Registration Page
+{% endblock title %}
+
+{% block body %}
+{% include 'include/headtitle.html' with headtitle="Registration" headsubTitle="Create an account"  %}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-3 "></div>
+        <div class="col-lg-6 ">
+            <div class="card text-left">
+                <div class="card-body">
+                    <h2 class="text-center card-title">Sign Up Form</h2>
+                    <hr>
+                    {% for error in form.non_field_errors %}
+                    {{error.tag}} {{error}}
+                    {% endfor %}
+                    <div class="container">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+                            {% for fm in form %}
+                            <div class="form-group row">
+                                <label for="inputName" class="col-md-12 col-form-label">{{fm.label_tag}}</label>
+                                <div class="col-md-12">
+                                    {{fm}}
+                                    <label class="text-danger"><small>{{fm.errors|striptags}}</small></label>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <button class="btn btn-success my-3" name="signup">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 "></div>
+    </div>
+</div>
+{% endblock %}
